@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anagram Solver</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>🔤 Anagram Solver</h2>
+    <p>Unscramble this word: <b>{{ shuffled }}</b></p>
+    <form method="post">
+        <input type="text" name="answer" required>
+        <button type="submit">Check</button>
+    </form>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <a href="/">🔙 Back to Home</a>
+</body>
+</html>

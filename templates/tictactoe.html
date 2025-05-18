@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let currentPlayer = 'X';
+        let gameActive = true;
+
+        function handleClick(index) {
+            if (!gameActive || board[index] !== '') return;
+
+            board[index] = currentPlayer;
+            document.getElementById('cell' + index).innerText = currentPlayer;
+
+            if (checkWin()) {
+                alert(currentPlayer + ' wins!');
+                gameActive = false;
+                return;
+            }
+
+            if (board.every(cell => cell !== '')) {
+                alert('Draw!');
+                gameActive = false;
+                return;
+            }
+
+            currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
+        }
+
+        function checkWin() {
+            const winPatterns = [
+                [0,1,2], [3,4,5], [6,7,8],
+                [0,3,6], [1,4,7], [2,5,8],
+                [0,4,8], [2,4,6]
+            ];
+
+            return winPatterns.some(pattern => 
+                board[pattern[0]] !== '' &&
+                board[pattern[0]] === board[pattern[1]] &&
+                board[pattern[1]] === board[pattern[2]]
+            );
+        }
+
+        function resetGame() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            gameActive = true;
+            for(let i=0; i<9; i++) {
+                document.getElementById('cell' + i).innerText = '';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>⭕❌ Tic Tac Toe</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, 60px); gap: 5px;">
+        <div id="cell0" onclick="handleClick(0)" class="cell"></div>
+        <div id="cell1" onclick="handleClick(1)" class="cell"></div>
+        <div id="cell2" onclick="handleClick(2)" class="cell"></div>
+        <div id="cell3" onclick="handleClick(3)" class="cell"></div>
+        <div id="cell4" onclick="handleClick(4)" class="cell"></div>
+        <div id="cell5" onclick="handleClick(5)" class="cell"></div>
+        <div id="cell6" onclick="handleClick(6)" class="cell"></div>
+        <div id="cell7" onclick="handleClick(7)" class="cell"></div>
+        <div id="cell8" onclick="handleClick(8)" class="cell"></div>
+    </div>
+    <button onclick="resetGame()">Restart Game</button>
+    <br><br>
+    <a href="/">🔙 Back to Home</a>
+
+    <style>
+        .cell {
+            width: 60px; height: 60px;
+            border: 1px solid #000;
+            font-size: 40px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            line-height: 60px;
+        }
+    </style>
+</body>
+</html>

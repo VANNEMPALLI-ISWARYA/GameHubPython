@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snake and Ladder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        let position = 0;
+
+        const snakes = {
+            16: 6,
+            47: 26,
+            49: 11,
+            56: 53,
+            62: 19,
+            64: 60,
+            87: 24,
+            93: 73,
+            95: 75,
+            98: 78
+        };
+
+        const ladders = {
+            1: 38,
+            4: 14,
+            9: 31,
+            21: 42,
+            28: 84,
+            36: 44,
+            51: 67,
+            71: 91,
+            80: 100
+        };
+
+        function rollDice() {
+            let dice = Math.floor(Math.random() * 6) + 1;
+            alert('You rolled a ' + dice);
+
+            position += dice;
+            if (position > 100) {
+                position -= dice;
+                alert('Roll too high, wait for next turn!');
+            } else {
+                if (snakes[position]) {
+                    alert('Oops! Bitten by a snake. Sliding down to ' + snakes[position]);
+                    position = snakes[position];
+                } else if (ladders[position]) {
+                    alert('Yay! Climbed a ladder to ' + ladders[position]);
+                    position = ladders[position];
+                }
+            }
+            document.getElementById('pos').innerText = position;
+
+            if (position === 100) {
+                alert('Congratulations! You reached 100 and won!');
+                position = 0;
+                document.getElementById('pos').innerText = position;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>🐍 Snake and Ladder</h2>
+    <p>Your position: <span id="pos">0</span></p>
+    <button onclick="rollDice()">Roll Dice</button>
+    <br><br>
+    <a href="/">🔙 Back to Home</a>
+</body>
+</html>
